@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
+import PostForm from './components/PostForm';
 import PostList from './components/PostList';
+
 import './styles/App.css';
 
 function App() {
@@ -9,14 +11,18 @@ function App() {
     {id:3, title:"JavaScript", body:'Description'},
     {id:4, title:"JavaScript", body:'Description'},
   ]);
+
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost])
+  }
+
+  const removePost = (post) => {
+    setPosts(posts.filter(p => p.id !== post.id))
+  }
   return (
     <div className="App">
-      <form>
-        <input type="text" placeholder="Название поста" />
-        <input type="text" placeholder="Описание поста" />
-        <button>Создать пост</button>
-      </form>
-      <PostList posts={posts} title='Список постов 1' />
+      <PostForm create={createPost}/>
+      <PostList remove={removePost} posts={posts} title='Список постов 1' />
     </div>
   );
 }
